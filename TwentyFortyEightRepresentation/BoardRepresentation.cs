@@ -1,43 +1,34 @@
-﻿namespace TwentyFortyEightRepresentation
+﻿using System.Collections.Generic;
+
+namespace TwentyFortyEightRepresentation
 {
-    public class BoardRepresentation
+    public class BoardRepresentation<T> : IBoardRepresentation<T>
     {
-        private readonly uint[,] _cells;
+        private IBoardData<T> Board { get; }
 
-        public BoardRepresentation(uint width, uint height)
+        public BoardRepresentation(IBoardData<T> board)
         {
-            _cells = new uint[width, height];
-            Width = width;
-            Height = height;
+            Board = board;
         }
 
-        public void SetCell(Coordinate coordinate, uint value)
-        {
-            SetCell(coordinate.X, coordinate.Y, value);
-        }
+        public void SetCell(Coordinate coordinate, T value) => SetCell(coordinate.X, coordinate.Y, value);
 
-        public void SetCell(uint x, uint y, uint value)
-        {
-            _cells[x, y] = value;
-        }
+        public void SetCell(uint x, uint y, T value) => Board.SetCell(x, y, value);
+        public IEnumerable<T> GetRow(uint y) => Board.GetRow(y);
 
-        public uint[,] GetCells()
-        {
-            return _cells;
-        }
+        public IEnumerable<T> GetColumn(uint x) => Board.GetColumn(x);
+        public void SetRow(uint y, IEnumerable<T> values) => Board.SetRow(y, values);
 
-        public uint GetCell(uint x, uint y)
-        {
-            return _cells[x, y];
-        }
+        public void SetColumn(uint x, IEnumerable<T> values) => Board.SetColumn(x, values);
 
-        public uint GetCell(Coordinate coordinate)
-        {
-            return GetCell(coordinate.X, coordinate.Y);
-        }
+        public IBoardData<T> Cells => Board;
 
-        public uint Width { get; }
+        public T GetCell(uint x, uint y) => Board.GetCell(x, y);
 
-        public uint Height { get; }
+        public T GetCell(Coordinate coordinate) => GetCell(coordinate.X, coordinate.Y);
+
+        public uint Width => Board.Width;
+
+        public uint Height => Board.Height;
     }
 }
