@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System.Collections.Generic;
+using FakeItEasy;
 using TwentyFortyEightRepresentation;
 using Xunit;
 
@@ -43,7 +44,7 @@ namespace TwentyFortyEightRepresentationTests
         public void A_Cell_Can_Be_Got_By_Indexes(uint x, uint y, uint value)
         {
             var sut = new BoardRepresentation<uint>(Board);
-            A.CallTo(() => Board.GetCell(x,y)).Returns(value);
+            A.CallTo(() => Board.GetCell(x, y)).Returns(value);
             Assert.Equal(value, sut.GetCell(x, y));
         }
 
@@ -63,6 +64,49 @@ namespace TwentyFortyEightRepresentationTests
             var sut = new BoardRepresentation<uint>(Board);
             A.CallTo(() => Board.GetCell(x, y)).Returns(value);
             Assert.Equal(value, sut.GetCell(new Coordinate(x, y)));
+        }
+
+        [Fact]
+        public void GetRow_Returns_Result_From_Board()
+        {
+            var sut = new BoardRepresentation<uint>(Board);
+            var row = A.Fake<IEnumerable<uint>>();
+            A.CallTo(() => Board.GetRow(2)).Returns(row);
+            Assert.Equal(row, sut.GetRow(2));
+        }
+
+        [Fact]
+        public void GetColumn_Returns_Result_From_Board()
+        {
+            var sut = new BoardRepresentation<uint>(Board);
+            var column = A.Fake<IEnumerable<uint>>();
+            A.CallTo(() => Board.GetColumn(2)).Returns(column);
+            Assert.Equal(column, sut.GetColumn(2));
+        }
+
+        [Fact]
+        public void SetRow_Passes_Row_To_Board()
+        {
+            var sut = new BoardRepresentation<uint>(Board);
+            var row = A.Fake<IEnumerable<uint>>();
+            sut.SetRow(2, row);
+            A.CallTo(() => Board.SetRow(2, row)).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
+        [Fact]
+        public void SetColumn_Passes_Column_To_Board()
+        {
+            var sut = new BoardRepresentation<uint>(Board);
+            var column = A.Fake<IEnumerable<uint>>();
+            sut.SetColumn(2, column);
+            A.CallTo(() => Board.SetColumn(2, column)).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
+        [Fact]
+        public void Cells_Returns_Board()
+        {
+            var sut = new BoardRepresentation<uint>(Board);
+            Assert.Equal(Board,sut.Cells);
         }
     }
 }
