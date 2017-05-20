@@ -1,4 +1,4 @@
-﻿namespace TwentyFortyEightRepresentation
+﻿namespace TwentyFortyEightRepresentation.Board
 {
     public struct Coordinate
     {

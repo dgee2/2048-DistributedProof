@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TwentyFortyEightRepresentation
+namespace TwentyFortyEightRepresentation.Board
 {
     public class BoardData<T> : IBoardData<T>
     {

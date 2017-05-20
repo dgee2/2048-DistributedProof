@@ -1,7 +1,7 @@
-using TwentyFortyEightRepresentation;
+using TwentyFortyEightRepresentation.Board;
 using Xunit;
 
-namespace TwentyFortyEightRepresentationTests
+namespace TwentyFortyEightRepresentationTests.Board
 {
     public class CoordinateTests
     {

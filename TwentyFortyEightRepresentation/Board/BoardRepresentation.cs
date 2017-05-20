@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TwentyFortyEightRepresentation
+namespace TwentyFortyEightRepresentation.Board
 {
     public class BoardRepresentation<T> : IBoardRepresentation<T>
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using FakeItEasy;
-using TwentyFortyEightRepresentation;
 using Xunit;
+using TwentyFortyEightRepresentation.Board;
 
-namespace TwentyFortyEightRepresentationTests
+namespace TwentyFortyEightRepresentationTests.Board
 {
     public class TwentyFortyEightBoardTests
     {

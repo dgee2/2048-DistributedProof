@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TwentyFortyEightRepresentation
+namespace TwentyFortyEightRepresentation.Board
 {
     public class TwentyFortyEightBoard
     {

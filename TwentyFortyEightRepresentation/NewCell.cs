@@ -1,4 +1,6 @@
-﻿namespace TwentyFortyEightRepresentation
+﻿using TwentyFortyEightRepresentation.Board;
+
+namespace TwentyFortyEightRepresentation
 {
     public struct NewCell
     {
