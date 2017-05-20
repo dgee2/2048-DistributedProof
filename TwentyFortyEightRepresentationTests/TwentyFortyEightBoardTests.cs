@@ -17,6 +17,7 @@ namespace TwentyFortyEightRepresentationTests
         [Fact]
         public void Constructor_Does_Not_Throw_An_Exception_If_All_Parameters_Are_Non_Null()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             new TwentyFortyEightBoard(A.Fake<IBoardRepresentation<uint>>());
         }
 
@@ -50,6 +51,46 @@ namespace TwentyFortyEightRepresentationTests
 
             var sut = new TwentyFortyEightBoard(board);
             Assert.Equal(cells, sut.Cells);
+        }
+
+        [Fact]
+        public void SlideCells_From_End_To_Beginning()
+        {
+            var input = new uint[] { 0, 0, 0, 5 };
+            var expected = new uint[] { 5, 0, 0, 0 };
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+        }
+
+        [Fact]
+        public void SlideCells_From_Middle_To_Beginning()
+        {
+            var input = new uint[] { 0, 0, 5, 0 };
+            var expected = new uint[] { 5, 0, 0, 0 };
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+        }
+
+        [Fact]
+        public void SlideCells_From_Beginning_To_Beginning()
+        {
+            var input = new uint[] { 5, 0, 0, 0 };
+            var expected = new uint[] { 5, 0, 0, 0 };
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+        }
+
+        [Fact]
+        public void SlideCells_Merges_Value_That_Is_Same()
+        {
+            var input = new uint[] { 5, 0, 5, 0 };
+            var expected = new uint[] { 10, 0, 0, 0 };
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+        }
+
+        [Fact]
+        public void SlideCells_Merges_Multiple_Values_That_Are_Same()
+        {
+            var input = new uint[] { 5, 5, 5, 5 };
+            var expected = new uint[] { 10, 10, 0, 0 };
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
         }
     }
 }
