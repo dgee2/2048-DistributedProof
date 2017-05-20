@@ -92,5 +92,89 @@ namespace TwentyFortyEightRepresentationTests
             var expected = new uint[] { 10, 10, 0, 0 };
             Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
         }
+
+        [Fact]
+        public void SlideCells_Up_Maps_Values_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {0,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Up);
+
+            var expected = new uint[,] {
+                {0,2,2 },
+                {0,0,2 },
+                {0,0,0 }
+            };
+
+            Assert.Equal(expected, sut.Cells.Cells);
+        }
+
+        [Fact]
+        public void SlideCells_Down_Maps_Values_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {0,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Down);
+
+            var expected = new uint[,] {
+                {0,0,0 },
+                {0,0,2 },
+                {0,2,2 }
+            };
+
+            Assert.Equal(expected, sut.Cells.Cells);
+        }
+
+        [Fact]
+        public void SlideCells_Left_Maps_Values_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {0,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Left);
+
+            var expected = new uint[,] {
+                {1,0,0 },
+                {2,0,0 },
+                {1,2,0 }
+            };
+
+            Assert.Equal(expected, sut.Cells.Cells);
+        }
+
+        [Fact]
+        public void SlideCells_Right_Maps_Values_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {0,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Right);
+
+            var expected = new uint[,] {
+                {0,0,1 },
+                {0,0,2 },
+                {0,1,2 }
+            };
+
+            Assert.Equal(expected, sut.Cells.Cells);
+        }
     }
 }

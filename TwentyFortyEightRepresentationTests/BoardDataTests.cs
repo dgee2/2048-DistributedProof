@@ -28,7 +28,7 @@ namespace TwentyFortyEightRepresentationTests
         {
             var sut = new BoardData<uint>(5, 5);
             sut.SetCell(x, y, value);
-            Assert.Equal(value, sut.Cells[x, y]);
+            Assert.Equal(value, sut.Cells[y, x]);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace TwentyFortyEightRepresentationTests
             });
 
             var row = sut.GetRow(2);
-            Assert.Equal(new[] { 2, 7, 12 }, row);
+            Assert.Equal(new[] { 10, 11, 12, 13, 14 }, row);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace TwentyFortyEightRepresentationTests
             });
 
             var column = sut.GetColumn(1);
-            Assert.Equal(new[] { 5, 6, 7, 8, 9 }, column);
+            Assert.Equal(new[] { 1, 6, 11}, column);
         }
 
         [Fact]
@@ -116,7 +116,23 @@ namespace TwentyFortyEightRepresentationTests
                 {5,6,7,8,9 },
                 {10,11,12,13,14 }
             });
-            Assert.Equal(13, sut.GetCell(2, 3));
+            Assert.Equal(13, sut.GetCell(3, 2));
+        }
+
+        [Fact]
+        public void ToString_Returns_Correct_String_Representation()
+        {
+            var sut = new BoardData<int>(new[,]
+            {
+                {0,1,2,3,4 },
+                {5,6,7,8,9 },
+                {10,11,12,13,14 }
+            });
+            var expected =
+@"0,1,2,3,4
+5,6,7,8,9
+10,11,12,13,14";
+            Assert.Equal(expected, sut.ToString());
         }
     }
 }

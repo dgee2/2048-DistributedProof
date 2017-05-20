@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace TwentyFortyEightRepresentation
 {
@@ -11,19 +12,28 @@ namespace TwentyFortyEightRepresentation
             Cells = cells ?? throw new ArgumentNullException(nameof(cells));
         }
 
-        public BoardData(uint width, uint height) : this(new T[width, height]) { }
+        public BoardData(uint width, uint height) : this(new T[height, width]) { }
 
+        /// <summary>
+        /// First index is the y position, second index is the x position
+        /// This is counter-intuitive here but makes things a lot easier
+        /// when we're creating and testing the arrays outside of this class
+        /// The arrays are 0 based
+        /// </summary>
         public T[,] Cells { get; }
 
-        public T GetCell(uint x, uint y) => Cells[x, y];
+        public T GetCell(uint x, uint y) => Cells[y, x];
         public void SetCell(uint x, uint y, T value)
         {
-            Cells[x, y] = value;
+            Cells[y, x] = value;
         }
 
-        public IEnumerable<T> GetColumn(uint x) => Enumerable.Range(0, (int)Height).Select(y => GetCell(x, (uint)y));
+        private IEnumerable<int> ColumnEnumerable => Enumerable.Range(0, (int)Height);
 
-        public IEnumerable<T> GetRow(uint y) => Enumerable.Range(0, (int)Width).Select(x => GetCell((uint)x, y));
+        public IEnumerable<T> GetColumn(uint x) => ColumnEnumerable.Select(y => GetCell(x, (uint)y));
+
+        private IEnumerable<int> RowEnumerable => Enumerable.Range(0, (int)Width);
+        public IEnumerable<T> GetRow(uint y) => RowEnumerable.Select(x => GetCell((uint)x, y));
         public void SetColumn(uint x, IEnumerable<T> values)
         {
             var valueArray = values as T[] ?? values.ToArray();
@@ -53,7 +63,12 @@ namespace TwentyFortyEightRepresentation
         }
 
 
-        public uint Width => (uint)Cells.GetLength(0);
-        public uint Height => (uint)Cells.GetLength(1);
+        public uint Width => (uint)Cells.GetLength(1);
+        public uint Height => (uint)Cells.GetLength(0);
+
+        public override string ToString()
+        {
+            return String.Join(Environment.NewLine, ColumnEnumerable.Select(y => String.Join(",", GetRow((uint)y))));
+        }
     }
 }
