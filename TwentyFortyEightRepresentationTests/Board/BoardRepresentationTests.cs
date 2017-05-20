@@ -2,6 +2,7 @@
 using FakeItEasy;
 using Xunit;
 using TwentyFortyEightRepresentation.Board;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace TwentyFortyEightRepresentationTests.Board
 {
