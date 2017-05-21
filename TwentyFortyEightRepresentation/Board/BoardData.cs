@@ -69,5 +69,32 @@ namespace TwentyFortyEightRepresentation.Board
         {
             return String.Join(Environment.NewLine, ColumnEnumerable.Select(y => String.Join(",", GetRow((uint)y))));
         }
+
+        public static explicit operator BoardData<T>(string data)
+        {
+            var items = data.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Select(row => row.Split(',')).ToList();
+
+            var width = items.First().Length;
+            var height = items.Count;
+
+            if (items.Any(value => value.Length != width))
+            {
+                throw new ArgumentOutOfRangeException(nameof(data), data, "Not rectangular data");
+            }
+
+            var array = new T[height, width];
+
+            var type = typeof(T);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    array[y, x] = (T)Convert.ChangeType(items[y][x], type);
+                }
+            }
+
+            return new BoardData<T>(array);
+        }
     }
 }

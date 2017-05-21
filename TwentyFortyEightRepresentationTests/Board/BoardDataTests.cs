@@ -63,7 +63,7 @@ namespace TwentyFortyEightRepresentationTests.Board
             });
 
             var column = sut.GetColumn(1);
-            Assert.Equal(new[] { 1, 6, 11}, column);
+            Assert.Equal(new[] { 1, 6, 11 }, column);
         }
 
         [Fact]
@@ -85,9 +85,9 @@ namespace TwentyFortyEightRepresentationTests.Board
         [Fact]
         public void SetRow_Throws_An_Exception_If_values_Is_Not_The_Same_Length_As_The_Width()
         {
-            var sut = new BoardData<int>(2,3);
+            var sut = new BoardData<int>(2, 3);
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() => sut.SetRow(1, new int[5]));
-            Assert.Equal("values",exception.ParamName);
+            Assert.Equal("values", exception.ParamName);
         }
 
         [Fact]
@@ -129,10 +129,30 @@ namespace TwentyFortyEightRepresentationTests.Board
                 {10,11,12,13,14 }
             });
             var expected =
-@"0,1,2,3,4
+                @"0,1,2,3,4
 5,6,7,8,9
 10,11,12,13,14";
             Assert.Equal(expected, sut.ToString());
+        }
+
+        [Fact]
+        public void Can_Cast_From_String()
+        {
+            var data =
+                @"0,1,2,3,4
+5,6,7,8,9
+10,11,12,13,14";
+            Assert.Equal(data, ((BoardData<uint>)data).ToString());
+        }
+
+        [Fact]
+        public void Cast_From_String_Throw_Exception_If_Not_Rectangular()
+        {
+            var data =
+                @"0,1,2,3,4
+5,6,7,8
+10,11,12,13,14";
+            Assert.Throws<ArgumentOutOfRangeException>(() => (BoardData<uint>)data);
         }
     }
 }
