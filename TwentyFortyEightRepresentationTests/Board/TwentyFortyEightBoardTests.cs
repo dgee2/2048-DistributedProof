@@ -58,7 +58,8 @@ namespace TwentyFortyEightRepresentationTests.Board
         {
             var input = new uint[] { 0, 0, 0, 5 };
             var expected = new uint[] { 5, 0, 0, 0 };
-            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+            uint score;
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input, out score));
         }
 
         [Fact]
@@ -66,7 +67,8 @@ namespace TwentyFortyEightRepresentationTests.Board
         {
             var input = new uint[] { 0, 0, 5, 0 };
             var expected = new uint[] { 5, 0, 0, 0 };
-            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+            uint score;
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input, out score));
         }
 
         [Fact]
@@ -74,7 +76,8 @@ namespace TwentyFortyEightRepresentationTests.Board
         {
             var input = new uint[] { 5, 0, 0, 0 };
             var expected = new uint[] { 5, 0, 0, 0 };
-            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+            uint score;
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input, out score));
         }
 
         [Fact]
@@ -82,7 +85,8 @@ namespace TwentyFortyEightRepresentationTests.Board
         {
             var input = new uint[] { 5, 0, 5, 0 };
             var expected = new uint[] { 10, 0, 0, 0 };
-            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+            uint score;
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input, out score));
         }
 
         [Fact]
@@ -90,7 +94,8 @@ namespace TwentyFortyEightRepresentationTests.Board
         {
             var input = new uint[] { 5, 5, 5, 5 };
             var expected = new uint[] { 10, 10, 0, 0 };
-            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input));
+            uint score;
+            Assert.Equal(expected, TwentyFortyEightBoard.SlideCells(input, out score));
         }
 
         [Fact]
@@ -175,6 +180,35 @@ namespace TwentyFortyEightRepresentationTests.Board
             };
 
             Assert.Equal(expected, sut.Cells.Cells);
+        }
+
+        [Fact]
+        public void SlideCells_Calculates_Score_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {1,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Right);
+            Assert.Equal((uint)4, sut.Score);
+        }
+
+        [Fact]
+        public void SlideCells_Twice_Calculates_Score_Correctly()
+        {
+            var data = new BoardData<uint>(new uint[,] {
+                {0,0,1 },
+                {0,1,1 },
+                {1,1,2 }
+            });
+            var board = new BoardRepresentation<uint>(data);
+            var sut = new TwentyFortyEightBoard(board);
+            sut.SlideCells(EDirection.Right);
+            sut.SlideCells(EDirection.Right);
+            Assert.Equal((uint)8, sut.Score);
         }
     }
 }

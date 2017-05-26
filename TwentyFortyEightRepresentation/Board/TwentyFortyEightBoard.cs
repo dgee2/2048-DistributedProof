@@ -51,11 +51,19 @@ namespace TwentyFortyEightRepresentation.Board
             }
         }
 
-        public static IEnumerable<uint> SlideCells(IEnumerable<uint> cells)
+        private IEnumerable<uint> SlideCells(IEnumerable<uint> cells)
+        {
+            uint score;
+            var results = SlideCells(cells, out score);
+            Score += score;
+            return results;
+        }
+
+        public static IEnumerable<uint> SlideCells(IEnumerable<uint> cells, out uint score)
         {
             var list = cells.ToList();
             var originalSize = list.Count;
-
+            score = 0;
             // Remove zeros
             list = list.Where(x => x != 0).ToList();
 
@@ -65,7 +73,9 @@ namespace TwentyFortyEightRepresentation.Board
             {
                 if (list[i] == list[i + 1])
                 {
-                    list[i] = list[i] + list[i + 1];
+                    var newValue = list[i] + list[i + 1];
+                    score += newValue;
+                    list[i] = newValue;
                     list.RemoveAt(i + 1);
                 }
                 i++;
@@ -81,5 +91,7 @@ namespace TwentyFortyEightRepresentation.Board
         public IBoardData<uint> Cells => Board.Cells;
         public uint Width => Board.Width;
         public uint Height => Board.Height;
+
+        public uint Score { get; private set; }
     }
 }
