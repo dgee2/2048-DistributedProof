@@ -4,7 +4,13 @@ namespace TwentyFortyEightRepresentation
 {
     public struct Move
     {
-        public NewCell NewCell { get; set; }
-        public EDirection Direction { get; set; }
+        public Move(NewCell newCell, EDirection direction)
+        {
+            NewCell = newCell;
+            Direction = direction;
+        }
+
+        public NewCell NewCell { get; }
+        public EDirection Direction { get; }
     }
 }

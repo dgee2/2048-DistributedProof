@@ -4,7 +4,13 @@ namespace TwentyFortyEightRepresentation
 {
     public struct NewCell
     {
-        public Coordinate Coordinate { get; set; }
-        public uint Value { get; set; }
+        public NewCell(Coordinate coordinate, uint value)
+        {
+            Coordinate = coordinate;
+            Value = value;
+        }
+
+        public Coordinate Coordinate { get; }
+        public uint Value { get; }
     }
 }
