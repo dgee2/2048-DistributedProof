@@ -13,18 +13,18 @@ namespace TwentyFortyEightRepresentation
         }
         public IImmutableList<Move> Moves { get; }
 
-        public IEnumerable<Game> AddMoves(IEnumerable<uint> values, IEnumerable<Coordinate> coordinates, IEnumerable<EDirection> directions)
+        public IEnumerable<Game> NewGamesFromMoves(IEnumerable<uint> values, IEnumerable<Coordinate> coordinates, IEnumerable<EDirection> directions)
         {
             var moves = values.SelectMany(
                 value => coordinates.SelectMany(
                     coordinate => directions.Select(
                         direction => new Move(new NewCell(coordinate, value), direction)
                     )));
-            return AddMoves(moves);
+            return NewGamesFromMoves(moves);
         }
 
-        public IEnumerable<Game> AddMoves(IEnumerable<Move> moves) => moves.Select(AddMove);
+        public IEnumerable<Game> NewGamesFromMoves(IEnumerable<Move> moves) => moves.Select(NewGame);
 
-        public Game AddMove(Move move) => new Game(Moves.Add(move));
+        public Game NewGame(Move move) => new Game(Moves.Add(move));
     }
 }
