@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TwentyFortyEightRepresentation.Board
 {
-    public class BoardData<T> : IBoardData<T>
+    public class BoardData<T> : IBoardData<T>, IReadonlyBoardData<T>
     {
         public BoardData(T[,] cells)
         {
@@ -33,6 +33,20 @@ namespace TwentyFortyEightRepresentation.Board
 
         private IEnumerable<int> RowEnumerable => Enumerable.Range(0, (int)Width);
         public IEnumerable<T> GetRow(uint y) => RowEnumerable.Select(x => GetCell((uint)x, y));
+        public IEnumerable<Tuple<uint, uint>> GetCells(Func<T, bool> predicate)
+        {
+            for (uint x = 0; x < Width; x++)
+            {
+                for (uint y = 0; y < Height; y++)
+                {
+                    var value = GetCell(x, y);
+                    if (predicate(value))
+                        yield return new Tuple<uint, uint>(x, y);
+
+                }
+            }
+        }
+
         public void SetColumn(uint x, IEnumerable<T> values)
         {
             var valueArray = values as T[] ?? values.ToArray();

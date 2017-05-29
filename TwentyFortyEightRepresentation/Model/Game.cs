@@ -3,13 +3,20 @@ using System.Collections.Immutable;
 using System.Linq;
 using TwentyFortyEightRepresentation.Board;
 
-namespace TwentyFortyEightRepresentation
+namespace TwentyFortyEightRepresentation.Model
 {
     public struct Game
     {
-        public Game(IImmutableList<Move> moves)
+        public Game(uint boardWidth, uint boardHeight)
+            : this(ImmutableList<Move>.Empty, boardWidth, boardHeight)
+        { }
+        public uint BoardWidth { get; }
+        public uint BoardHeight { get; }
+        public Game(IImmutableList<Move> moves, uint boardWidth, uint boardHeight)
         {
             Moves = moves;
+            BoardWidth = boardWidth;
+            BoardHeight = boardHeight;
         }
         public IImmutableList<Move> Moves { get; }
 
@@ -25,6 +32,6 @@ namespace TwentyFortyEightRepresentation
 
         public IEnumerable<Game> NewGamesFromMoves(IEnumerable<Move> moves) => moves.Select(NewGame);
 
-        public Game NewGame(Move move) => new Game(Moves.Add(move));
+        public Game NewGame(Move move) => new Game(Moves.Add(move), BoardWidth, BoardHeight);
     }
 }

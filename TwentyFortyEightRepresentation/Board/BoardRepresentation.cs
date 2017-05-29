@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TwentyFortyEightRepresentation.Board
 {
@@ -14,6 +16,10 @@ namespace TwentyFortyEightRepresentation.Board
         public void SetCell(Coordinate coordinate, T value) => SetCell(coordinate.X, coordinate.Y, value);
 
         public void SetCell(uint x, uint y, T value) => Board.SetCell(x, y, value);
+
+        public IEnumerable<Coordinate> GetCells(Func<T, bool> predicate)
+            => Board.GetCells(predicate).Select(x => new Coordinate(x.Item1, x.Item2));
+
         public IEnumerable<T> GetRow(uint y) => Board.GetRow(y);
 
         public IEnumerable<T> GetColumn(uint x) => Board.GetColumn(x);

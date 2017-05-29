@@ -1,4 +1,7 @@
-﻿namespace TwentyFortyEightRepresentation.Board
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace TwentyFortyEightRepresentation.Board
 {
     public enum EDirection
     {

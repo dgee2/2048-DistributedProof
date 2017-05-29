@@ -116,7 +116,7 @@ namespace TwentyFortyEightRepresentationTests.Board
                 {0,0,0 }
             };
 
-            Assert.Equal(expected, sut.Cells.Cells);
+            Assert.Equal(expected, ((IBoardData<uint>)sut.Cells).Cells);
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace TwentyFortyEightRepresentationTests.Board
                 {0,2,2 }
             };
 
-            Assert.Equal(expected, sut.Cells.Cells);
+            Assert.Equal(expected, ((IBoardData<uint>)sut.Cells).Cells);
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace TwentyFortyEightRepresentationTests.Board
                 {1,2,0 }
             };
 
-            Assert.Equal(expected, sut.Cells.Cells);
+            Assert.Equal(expected, ((IBoardData<uint>)sut.Cells).Cells);
         }
 
         [Fact]
@@ -179,7 +179,7 @@ namespace TwentyFortyEightRepresentationTests.Board
                 {0,1,2 }
             };
 
-            Assert.Equal(expected, sut.Cells.Cells);
+            Assert.Equal(expected, ((IBoardData<uint>)sut.Cells).Cells);
         }
 
         [Fact]

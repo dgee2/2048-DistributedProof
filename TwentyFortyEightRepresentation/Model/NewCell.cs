@@ -1,6 +1,6 @@
 ﻿using TwentyFortyEightRepresentation.Board;
 
-namespace TwentyFortyEightRepresentation
+namespace TwentyFortyEightRepresentation.Model
 {
     public struct NewCell
     {

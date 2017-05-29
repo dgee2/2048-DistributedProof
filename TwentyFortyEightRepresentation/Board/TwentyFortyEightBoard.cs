@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TwentyFortyEightRepresentation.Model;
 
 namespace TwentyFortyEightRepresentation.Board
 {
     public class TwentyFortyEightBoard
     {
+        public TwentyFortyEightBoard(uint width, uint height)
+            : this(new BoardRepresentation<uint>(new BoardData<uint>(width, height)))
+        { }
+
         public TwentyFortyEightBoard(IBoardRepresentation<uint> board)
         {
             Board = board ?? throw new ArgumentNullException(nameof(board));
@@ -19,7 +24,7 @@ namespace TwentyFortyEightRepresentation.Board
             {
                 for (uint x = 0; x < Cells.Width; x++)
                 {
-                    var column = Cells.GetColumn(x).ToArray();
+                    var column = Board.Cells.GetColumn(x).ToArray();
                     if (direction == EDirection.Down)
                     {
                         Array.Reverse(column);
@@ -29,14 +34,14 @@ namespace TwentyFortyEightRepresentation.Board
                     {
                         Array.Reverse(column);
                     }
-                    Cells.SetColumn(x, column);
+                    Board.Cells.SetColumn(x, column);
                 }
             }
             else
             {
-                for (uint y = 0; y < Cells.Width; y++)
+                for (uint y = 0; y < Cells.Height; y++)
                 {
-                    var row = Cells.GetRow(y).ToArray();
+                    var row = Board.Cells.GetRow(y).ToArray();
                     if (direction == EDirection.Right)
                     {
                         Array.Reverse(row);
@@ -46,7 +51,7 @@ namespace TwentyFortyEightRepresentation.Board
                     {
                         Array.Reverse(row);
                     }
-                    Cells.SetRow(y, row);
+                    Board.Cells.SetRow(y, row);
                 }
             }
         }
@@ -87,11 +92,21 @@ namespace TwentyFortyEightRepresentation.Board
             return list;
         }
 
+        public void SetCell(Coordinate coordinate, uint value) => Board.SetCell(coordinate, value);
+        public void SetCell(NewCell cell) => SetCell(cell.Coordinate, cell.Value);
 
-        public IBoardData<uint> Cells => Board.Cells;
+        public IEnumerable<Coordinate> GetEmptyCells() => Board.GetCells(x => x == 0);
+
+
+        public IReadonlyBoardData<uint> Cells => Board.Cells;
         public uint Width => Board.Width;
         public uint Height => Board.Height;
 
         public uint Score { get; private set; }
+
+        public override string ToString()
+        {
+            return Cells.ToString();
+        }
     }
 }
